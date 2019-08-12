@@ -1,10 +1,12 @@
+/*jshint esversion: 8 */
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var bluebird = require('bluebird')
+var bluebird = require('bluebird');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,7 +14,7 @@ var usersRouter = require('./routes/users');
 // var index = require('./routes/index.route');
 // var users = require('./routes/users.route');
 
-var api = require('./routes/api.route')
+var api = require('./routes/api.route');
 
 var app = express();
 
@@ -31,12 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// //Use the Routes
-// app.use('/', index);
-// app.use('/users', users);
-
 //Use the API routes for all routes matching /api
-
 app.use('/api', api);
 
 // catch 404 and forward to error handler
@@ -56,11 +53,14 @@ app.use(function(err, req, res, next) {
 });
 
 // mongoose setup
-var mongoose = require('mongoose')
-mongoose.Promise = bluebird
+var mongoose = require('mongoose');
+mongoose.Promise = bluebird;
 mongoose.connect('mongodb+srv://dsiers:kjv1611@sermon-app-s3dr2.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true })
-    .then(() => { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb+srv://dsiers:kjv1611@sermon-app-s3dr2.mongodb.net/test?retryWrites=true&w=majority`) })
-    .catch(() => { console.log(`Error Connecting to the Mongodb Database at URL : mongodb+srv://dsiers:kjv1611@sermon-app-s3dr2.mongodb.net/test?retryWrites=true&w=majority`) })
+    .then(() => { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb+srv://dsiers:kjv1611@sermon-app-s3dr2.mongodb.net/test?retryWrites=true&w=majority`); })
+    .catch(e => {
+        console.log(e);
+        console.log(`Error Connecting to the Mongodb Database at URL : mongodb+srv://dsiers:kjv1611@sermon-app-s3dr2.mongodb.net/test?retryWrites=true&w=majority`);
+    });
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");

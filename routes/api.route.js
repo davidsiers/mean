@@ -1,10 +1,10 @@
-var express = require('express')
+var express = require('express');
 
-var router = express.Router()
-var todos = require('./api/todos.route')
+var router = express.Router();
+var sermonNotes = require('./api/sermon-notes.route');
 
 
-router.use('/todos', todos);
+router.use('/sermon-notes', sermonNotes);
 
 
 module.exports = router;
